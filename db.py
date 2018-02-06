@@ -1,8 +1,16 @@
-import MySQLdb
+from flask import Flask
+from flask_mysqldb import MySQL
 
-myDB = MySQLdb.connect(host="208.11.220.249",port=3306,user="XXXXX",passwd="XXXXX",db="XXXXX")
-cHandler = myDB.cursor()
-cHandler.execute("SHOW DATABASES")
-results = cHandler.fetchall()
-for items in results:
-    print (items[items])
+app = Flask(__name__)
+mysql = MySQL(app)
+
+
+@app.route('/')
+def users():
+    cur = mysql.connect
+    cur.execute('''SELECT user, host FROM mysql.user''')
+    rv = cur.fetchall()
+    return str(rv)
+
+if __name__ == '__main__':
+    app.run(debug=True)
